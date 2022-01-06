@@ -9,6 +9,13 @@ import (
 	cbg "github.com/whyrusleeping/cbor-gen"
 )
 
+// Specifies a domain for randomness generation.
+type SignatureDomainSeparationTag int64
+
+const (
+	SignatureDomainSeparationTag_DataCapRemoval SignatureDomainSeparationTag = 1 + iota
+)
+
 type SigType byte
 
 const (
