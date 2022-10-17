@@ -6,6 +6,14 @@ import (
 )
 
 var Methods = map[uint64]interface{}{
-	1: *new(func(interface{}, *address.Address) *abi.EmptyValue), // Constructor
-	2: *new(func(interface{}, *abi.EmptyValue) *address.Address), // PubkeyAddress
+	1: Constructor,   // Constructor
+	2: PubkeyAddress, // PubkeyAddress
+}
+
+func Constructor(interface{}, *address.Address) *abi.EmptyValue {
+	return nil
+}
+
+func PubkeyAddress(interface{}, *abi.EmptyValue) *address.Address {
+	return nil
 }
