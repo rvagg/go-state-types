@@ -1,6 +1,8 @@
 package cron
 
 import (
+	"fmt"
+
 	"github.com/filecoin-project/go-address"
 
 	"github.com/filecoin-project/go-state-types/builtin"
@@ -13,6 +15,8 @@ type StateSummary struct {
 
 // Checks internal invariants of cron state.
 func CheckStateInvariants(st *State, _ adt.Store) (*StateSummary, *builtin.MessageAccumulator) {
+	fmt.Println("checking cron actor")
+
 	acc := &builtin.MessageAccumulator{}
 	cronSummary := &StateSummary{
 		EntryCount: len(st.Entries),

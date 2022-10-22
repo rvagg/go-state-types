@@ -1,6 +1,8 @@
 package verifreg
 
 import (
+	"fmt"
+
 	addr "github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
@@ -18,6 +20,8 @@ type StateSummary struct {
 
 // Checks internal invariants of verified registry state.
 func CheckStateInvariants(st *State, store adt.Store, priorEpoch abi.ChainEpoch) (*StateSummary, *builtin.MessageAccumulator) {
+	fmt.Println("checking verifreg actor")
+
 	acc := &builtin.MessageAccumulator{}
 	acc.Require(st.RootKey.Protocol() == addr.ID, "root key %v should have ID protocol", st.RootKey)
 

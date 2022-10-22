@@ -3,6 +3,7 @@ package market
 import (
 	"bytes"
 	"encoding/binary"
+	"fmt"
 
 	"github.com/filecoin-project/go-state-types/builtin/v9/verifreg"
 
@@ -40,6 +41,8 @@ type StateSummary struct {
 
 // Checks internal invariants of market state.
 func CheckStateInvariants(st *State, store adt.Store, balance abi.TokenAmount, currEpoch abi.ChainEpoch) (*StateSummary, *builtin.MessageAccumulator) {
+	fmt.Println("checking market actor")
+
 	acc := &builtin.MessageAccumulator{}
 
 	acc.Require(

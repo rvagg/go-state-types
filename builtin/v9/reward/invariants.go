@@ -1,6 +1,8 @@
 package reward
 
 import (
+	"fmt"
+
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
 
@@ -14,6 +16,8 @@ var FIL = big.NewInt(1e18)
 var StorageMiningAllocationCheck = big.Mul(big.NewInt(1_100_000_000), FIL)
 
 func CheckStateInvariants(st *State, _ adt.Store, priorEpoch abi.ChainEpoch, balance abi.TokenAmount) (*StateSummary, *builtin.MessageAccumulator) {
+	fmt.Println("checking reward actor")
+
 	acc := &builtin.MessageAccumulator{}
 
 	// Can't assert equality because anyone can send funds to reward actor (and already have on mainnet)

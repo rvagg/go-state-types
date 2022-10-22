@@ -1,6 +1,8 @@
 package init
 
 import (
+	"fmt"
+
 	addr "github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	cbg "github.com/whyrusleeping/cbor-gen"
@@ -16,6 +18,7 @@ type StateSummary struct {
 
 // Checks internal invariants of init state.
 func CheckStateInvariants(st *State, store adt.Store) (*StateSummary, *builtin.MessageAccumulator) {
+	fmt.Println("checking init actor")
 	acc := &builtin.MessageAccumulator{}
 
 	acc.Require(len(st.NetworkName) > 0, "network name is empty")

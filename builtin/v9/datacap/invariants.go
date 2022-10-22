@@ -1,6 +1,8 @@
 package datacap
 
 import (
+	"fmt"
+
 	addr "github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
@@ -18,6 +20,8 @@ type StateSummary struct {
 
 // Checks internal invariants of verified registry state.
 func CheckStateInvariants(st *State, store adt.Store) (*StateSummary, *builtin.MessageAccumulator) {
+	fmt.Println("checking datacap actor")
+
 	acc := &builtin.MessageAccumulator{}
 	acc.Require(st.Governor.Protocol() == addr.ID, "governor %v must be ID address", st.Governor)
 	checkTokenInvariants(store, st.Token, acc)

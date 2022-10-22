@@ -53,7 +53,7 @@ func CheckStateInvariants(tree *builtin.ActorTree, priorEpoch abi.ChainEpoch, ac
 		if count%100000 == 0 {
 			fmt.Println("checking actor ", count)
 		}
-
+		//fmt.Println("checking ", key)
 		acc := acc.WithPrefix("%v ", key) // Intentional shadow
 		if key.Protocol() != address.ID {
 			acc.Addf("unexpected address protocol in state tree root: %v", key)

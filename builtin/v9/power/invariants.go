@@ -1,6 +1,8 @@
 package power
 
 import (
+	"fmt"
+
 	"github.com/filecoin-project/go-address"
 	"github.com/filecoin-project/go-state-types/abi"
 	"github.com/filecoin-project/go-state-types/big"
@@ -27,6 +29,8 @@ type StateSummary struct {
 
 // Checks internal invariants of power state.
 func CheckStateInvariants(st *State, store adt.Store) (*StateSummary, *builtin.MessageAccumulator) {
+	fmt.Println("checking power actor")
+
 	acc := &builtin.MessageAccumulator{}
 
 	// basic invariants around recorded power
