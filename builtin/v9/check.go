@@ -2,6 +2,7 @@ package v9
 
 import (
 	"bytes"
+	"fmt"
 
 	"github.com/filecoin-project/go-state-types/builtin/v9/datacap"
 
@@ -44,8 +45,15 @@ func CheckStateInvariants(tree *builtin.ActorTree, priorEpoch abi.ChainEpoch, ac
 	var paychSummaries []*paych.StateSummary
 	var multisigSummaries []*multisig.StateSummary
 	minerSummaries := make(map[address.Address]*miner.StateSummary)
+	fmt.Println("checking v9 invariants")
+	count := 0
 
 	if err := tree.ForEach(func(key address.Address, actor *builtin.Actor) error {
+		count++
+		if count%100000 == 0 {
+			fmt.Println("checking actor ", count)
+		}
+
 		acc := acc.WithPrefix("%v ", key) // Intentional shadow
 		if key.Protocol() != address.ID {
 			acc.Addf("unexpected address protocol in state tree root: %v", key)
@@ -151,15 +159,23 @@ func CheckStateInvariants(tree *builtin.ActorTree, priorEpoch abi.ChainEpoch, ac
 		return nil, err
 	}
 
+	fmt.Println("done checking tree, time for crossactor checks")
+
 	//
 	// Perform cross-actor checks from state summaries here.
 	//
 
+	fmt.Println("crosscheck 1")
 	CheckMinersAgainstPower(acc, minerSummaries, powerSummary)
+	fmt.Println("crosscheck 2")
 	CheckDealStatesAgainstSectors(acc, minerSummaries, marketSummary)
+	fmt.Println("crosscheck 3")
 	CheckVerifregAgainstMiners(acc, verifregSummary, minerSummaries)
+	fmt.Println("crosscheck 4")
 	CheckMarketAgainstVerifreg(acc, verifregSummary, marketSummary)
+	fmt.Println("crosscheck 5")
 	CheckVerifregAgainstDatacap(acc, verifregSummary, datacapSummary)
+	fmt.Println("crosscheck 6")
 
 	_ = initSummary
 	_ = verifregSummary
